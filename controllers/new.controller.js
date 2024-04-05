@@ -28,7 +28,9 @@ const getNew = async (req, res) => {
 
 const createNew = async (req, res) => {
   try {
+    console.log("create a paper", req.body);
     const paper = await New.create(req.body);
+    console.log("create a paper");
     res.status(200).json(paper);
   } catch (error) {
     res.status(500).json({ message: error.message });
