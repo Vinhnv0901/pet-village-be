@@ -7,20 +7,34 @@ const getProducts = async (req, res) => {
 
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ massage: error.massage });
+    res.status(500).json({ message: error.message });
   }
 };
 
-const getDogProduct = async (req, res) => {
+const getPropProduct = async (req, res) => {
   try {
+    const { prop1, prop2, prop3 } = req.params;
+    console.log(prop1, prop2, prop3);
     const products = await Product.find(
-      { species: { $in: "dog" } },
+      { species: { $all: [prop1, prop2, prop3] } },
       { species: 1 }
     );
 
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ massage: error.massage });
+    res.status(500).json({ message: error.message });
+  }
+};
+/**search */
+const getSearchProduct = async (req, res) => {
+  try {
+    const { prop } = req.params;
+    console.log(prop);
+    const products = await Product.find({ $text: { $search: prop } });
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -28,7 +42,6 @@ const getProduct = async (req, res) => {
   //how get id of item
   try {
     const { id } = req.params;
-
     const product = await Product.findById(id);
 
     res.status(200).json(product);
@@ -91,7 +104,8 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  getDogProduct,
+  getPropProduct,
+  getSearchProduct,
 };
 
 ///số lượng bán được của một sản phẩn

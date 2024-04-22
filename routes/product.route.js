@@ -6,14 +6,16 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
-  getDogProduct,
+  getSearchProduct,
+  getPropProduct,
 } = require("../controllers/product.controller.js");
 
 //**GET */
 router.get("/", getProducts);
-router.get("/dog", getDogProduct);
-router.get("/:id", getProduct);
+router.get("/search/:prop", getSearchProduct);
+router.get("/:id([0-9a-fA-F]{24})", getProduct);
 
+router.get("/:prop1/:prop2?/:prop3?", getPropProduct);
 //**Create */
 
 router.post("/", createProduct);
